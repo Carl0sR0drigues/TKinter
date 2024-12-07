@@ -1,49 +1,58 @@
-from tkinter import *
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import ttk
 
-def somador():
-    n1 = entrada1.get()
-    n2 = entrada2.get()
+# Função para calcular a soma
+def calcular_soma():
     try:
-        resultado = int(n1) + int(n2)
-        # Adicionando título à mensagem
-        resultado_label.config(text=f"Resultado da soma de {n1}+{n2} é {resultado}")
+        num1 = float(entry_num1.get())  # Pega o primeiro número
+        num2 = float(entry_num2.get())  # Pega o segundo número
+        resultado = num1 + num2  # Realiza a soma
+        label_resultado.config(text=f"A soma de {num1} e {num2} é {resultado}")  # Exibe o resultado
     except ValueError:
-        # Adicionando título ao erro
-        resultado_label.config(text="Erro: insira apenas números válidos.")
+        label_resultado.config(text="Por favor, insira números válidos!")  # Mensagem de erro em caso de input inválido
 
-window = Tk()
-window.title('SOMADOR!')
-window.geometry('400x320')
-window.eval('tk::PlaceWindow . center')
+# Função para sair
+def sair():
+    root.quit()
 
-enter_text1 = ttk.Label(window, text= 'DIGITE UM VALOR')
-enter_text1.pack(pady=10)
+# Configuração da janela principal
+root = tk.Tk()
+root.title("Calculadora de Soma")
 
-entrada1 = ttk.Entry(window, width=20)
-entrada1.pack(pady=5)
+# Centralizar a janela
+root.geometry("400x300+{}+{}".format(
+    int((root.winfo_screenwidth() - 400) / 2), 
+    int((root.winfo_screenheight() - 300) / 2)
+))
 
-enter_text2 = ttk.Label(window, text= 'DIGITE OUTRO VALOR')
-enter_text2.pack(pady=10)
+# Texto de introdução
+intro_label = tk.Label(root, text="Digite dois números para somar:")
+intro_label.pack(pady=10)
 
-entrada2 = ttk.Entry(window, width=20)
-entrada2.pack(pady=5)
+# Entrada para o primeiro número
+entry_num1_label = tk.Label(root, text="Digite o primeiro número:")
+entry_num1_label.pack()
+entry_num1 = tk.Entry(root)
+entry_num1.pack(pady=5)
 
-button_sum = ttk.Button(window, text='CLICK PARA SOMAR', command=somador)
-button_sum.pack(pady=10)
+# Entrada para o segundo número
+entry_num2_label = tk.Label(root, text="Digite o segundo número:")
+entry_num2_label.pack()
+entry_num2 = tk.Entry(root)
+entry_num2.pack(pady=5)
 
-resultado_label = Label(window, text='', font=('Arial', 14), fg='blue')
-resultado_label.pack(pady=10)
+# Botão de calcular soma com fundo azul e texto em Arial Black
+calc_button = tk.Button(root, text="Calcular Soma", command=calcular_soma, 
+                        bg="blue", fg="white", font=("Arial Black", 12))
+calc_button.pack(pady=20)
 
-saida = ttk.Label(window, text='PRECIONE A TECLA ESC PARA SAIR')
-saida.pack(pady=5)
+# Label para mostrar o resultado
+label_resultado = tk.Label(root, text="", font=("Helvetica", 12))
+label_resultado.pack(pady=10)
 
-text_sum = Label(window, text='')
-text_sum.pack(pady=10)
+# Botão de saída com fundo azul e texto em Arial Black
+exit_button = tk.Button(root, text="Sair", command=sair, 
+                        bg="blue", fg="white", font=("Arial Black", 12))
+exit_button.pack(pady=10)
 
-window.bind("<Escape>", lambda event: window.destroy())
-
-window.mainloop()
-
+# Iniciar a janela
+root.mainloop()
